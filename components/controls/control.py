@@ -39,6 +39,6 @@ class Control:
             html.Div: The HTML element representing the filter.
         """
         raise NotImplementedError(
-            "Base object 'Page' should not be used, use specified type"
+            "Base object 'Page' should not be used, use specified type "
             "(e.g. Dropdown)"
         )
