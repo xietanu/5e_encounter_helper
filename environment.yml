@@ -1,0 +1,13 @@
+name: dnd_helper
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.9
+  - pytest=6.2
+  - pylint=2.12
+  - black=21.12b0
+  - dash=2.0
+  - plotly=5.5.0
+  - numpy=1.22.0
+  - pandas=1.3
