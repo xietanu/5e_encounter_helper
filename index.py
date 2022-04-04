@@ -80,7 +80,7 @@ def update_query_string(pathname, *control_values):
     page = dashboard_pages.get_page(pathname)
 
     kwargs = {
-        control.value.identifier: control_value
+        control.value.identifier: str(control_value)
         for control, control_value in zip(comp.controls.Monster, control_values)
     }
 

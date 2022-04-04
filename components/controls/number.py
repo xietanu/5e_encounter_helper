@@ -2,10 +2,11 @@
 from typing import Optional
 
 import dash
-from components.controls.control import Control
+from app import app
+from components.controls import control
 
 
-class Slider(Control):
+class Number(control.Control):
     """
     A filter that allows the user to select options from a pre-determined list.
     """
@@ -14,8 +15,7 @@ class Slider(Control):
         self,
         label: str,
         identifier: str,
-        min_max_range: tuple[int, int],
-        default_value: int,
+        default_value: str = "0",
     ):
         """
         Args:
@@ -25,7 +25,15 @@ class Slider(Control):
             default_value (str, optional): Default option to be selected. Defaults to None.
         """
         super().__init__(label, identifier, default_value)
-        self.min, self.max = min_max_range
+        
+        @app.callback(
+            dash.Output(component_id=f"{self.identifier}-type-message", component_property="children"),
+            dash.Input(component_id=f"{self.identifier}", component_property="value")
+        )
+        def update_message(value:str) -> str:
+            if not value.isnumeric():
+                return "Input should be number"
+            return ""
 
     def to_html(self, selected_value: Optional[str] = None) -> dash.html.Div:
         """
@@ -46,12 +54,12 @@ class Slider(Control):
                     self.label,
                     htmlFor=self.identifier,
                 ),
-                dash.dcc.Slider(
+                dash.dcc.Input(
                     id=self.identifier,
-                    min=self.min,
-                    max=self.max,
-                    step=1,
-                    value=int(selected_value),
+                    value=str(selected_value),
                 ),
+                dash.html.Div(
+                    id = f"{self.identifier}-type-message"
+                )
             ],
         )

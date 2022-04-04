@@ -3,7 +3,7 @@ import components as comp
 import dnd
 
 
-def update_monster_calculator(challenge_rating: int) -> list:
+def update_monster_calculator(challenge_rating: str) -> list:
     """
     Generate the reactive components for the monster calculator page
 
@@ -13,7 +13,11 @@ def update_monster_calculator(challenge_rating: int) -> list:
     Returns:
         list: List of html components
     """
-    monster = dnd.Monster("Gelatinous Cube", challenge_rating, dnd.Family.OOZE.value)
+    cr_int = 0
+    if challenge_rating.isnumeric():
+        cr_int = int(challenge_rating)
+
+    monster = dnd.Monster("Gelatinous Cube", cr_int, dnd.Family.OOZE.value)
 
     return [
         comp.controls.Monster.CR.value.to_html(challenge_rating)

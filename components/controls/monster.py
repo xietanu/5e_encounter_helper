@@ -9,6 +9,6 @@ class Monster(Enum):
     CR = slider.Slider(
         label="CR",
         identifier="challenge_rating",
-        min_max_range=(0, 20),
+        min_max_range=(-2, 20),
         default_value=1,
     )
