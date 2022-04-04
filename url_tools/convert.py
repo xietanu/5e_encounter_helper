@@ -29,6 +29,8 @@ def query_string_to_kwargs(query_string: str) -> dict:
             key, value = key_value_pair.split("=")
             if value == "None":
                 value = None
+            elif value.isnumeric():
+                value = int(value)
             else:
                 value = value.replace("+", " ")
             output[key] = value

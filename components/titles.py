@@ -13,3 +13,15 @@ def page_title(title: str) -> html.H1:
         dash.html.H1: title HTML component
     """
     return html.H1(title)
+
+def section_title(title: str) -> html.H2:
+    """
+    Create HTML for standard styled page title
+
+    Args:
+        title (str): section title
+
+    Returns:
+        dash.html.H2: title HTML component
+    """
+    return html.H2(title)
