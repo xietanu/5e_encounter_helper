@@ -1,14 +1,20 @@
 """Monster enum"""
 from enum import Enum
-from components.controls import slider
+from components.controls import number, dropdown
+import dnd
 
 
 class Monster(Enum):
     """List of monster related controls"""
 
-    CR = slider.Slider(
+    CR = number.Number(
         label="CR",
         identifier="challenge_rating",
-        min_max_range=(-2, 20),
-        default_value=1,
+        default_value="1",
+    )
+
+    FAMILY = dropdown.Dropdown(
+        label = "Type",
+        identifier = "family",
+        options = [family.value.name for family in dnd.Family]
     )

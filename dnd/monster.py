@@ -1,8 +1,6 @@
 """Monster class"""
 
-from components import titles
 from dnd import families
-import dash
 
 
 BASE_DC = 11
@@ -37,12 +35,4 @@ class Monster:
             int: Stanard difficulty class.
         """
         return BASE_DC + (self.challenge_rating // 2)
-    
-    def generate_stat_block(self) -> list:
-        return [
-            titles.section_title("Monster"),
-            dash.html.Div(f"Type: {self.family.name} - {self.family.description}"),
-            dash.html.Div(f"CR: {self.challenge_rating}"),
-            dash.html.Div(f"Prof bonus: {self.proficiency_bonus}"),
-            dash.html.Div(f"Save DC: {self.save_dc}"),
-        ]
+

@@ -1,7 +1,6 @@
 """Component that allows the user to select options from a pre-determined list"""
-from typing import Optional
-from dash import html, dcc
 from components.controls.control import Control
+from dash import dcc
 
 
 class Dropdown(Control):
@@ -26,30 +25,12 @@ class Dropdown(Control):
         super().__init__(label, identifier, default_value)
         self.options = options
 
-    def to_html(self, selected_value: Optional[str] = None) -> html.Div:
-        """
-        Returns a HTML dropdown representing the filter for the user to select an option from.
-
-        Args:
-            selected_value (str, optional): Currently selected option. Defaults to None.
-
-        Returns:
-            html.Div: The HTML element representing the filter
-        """
-        if selected_value is None:
-            selected_value = str(self.default_value)
-
-        return html.Div(
-            [
-                html.Label(
-                    self.label,
-                    htmlFor=self.identifier,
-                ),
-                dcc.Dropdown(
-                    id=self.identifier,
-                    options=self.options,
-                    value=selected_value,
-                    clearable=False,
-                ),
-            ],
+    def _create_interactice_element_html(self, selected_value: str):
+        return dcc.Dropdown(
+            id=self.identifier,
+            options=self.options,
+            value=selected_value,
+            clearable=False,
+            className="card-element-value",
+            style={"width": f"{max(len(option) for option in self.options)*0.8}em"},
         )

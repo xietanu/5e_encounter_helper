@@ -1,9 +1,11 @@
 """update_monster_calculator function"""
 import components as comp
+import dash
 import dnd
+from components import controls
 
 
-def update_monster_calculator(challenge_rating: str) -> list:
+def update_monster_calculator(challenge_rating: str, family: str) -> list:
     """
     Generate the reactive components for the monster calculator page
 
@@ -20,5 +22,18 @@ def update_monster_calculator(challenge_rating: str) -> list:
     monster = dnd.Monster("Gelatinous Cube", cr_int, dnd.Family.OOZE.value)
 
     return [
-        comp.controls.Monster.CR.value.to_html(challenge_rating)
-    ] + monster.generate_stat_block()
+        comp.card_section(
+            [
+                comp.card_element("Name:", monster.name),
+                controls.Monster.CR.value.to_html(challenge_rating),
+                dash.html.Div(controls.Monster.FAMILY.value.to_html(family)),
+                dash.html.Div(f"{monster.family.description}", className="dnd-hint"),
+            ],
+        ),
+        comp.card_section(
+            [
+                dash.html.Div(f"Prof bonus: {monster.proficiency_bonus}"),
+                dash.html.Div(f"Save DC: {monster.save_dc}"),
+            ]
+        ),
+    ]

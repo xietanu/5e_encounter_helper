@@ -25,8 +25,11 @@ class Control:
         self.label = label
         self.identifier = identifier
         self.default_value = default_value
+        
+    def _create_interactice_element_html(self, selected_value: str):
+        raise NotImplementedError()
 
-    def to_html(self, selected_value: Optional[Union[int, str]] = None) -> html.Div:
+    def to_html(self, selected_value: Optional[str] = None) -> html.Div:
         """
         Creates a HTML representation of the filter.
 
@@ -38,7 +41,19 @@ class Control:
         Returns:
             html.Div: The HTML element representing the filter.
         """
-        raise NotImplementedError(
-            "Base object 'Page' should not be used, use specified type "
-            "(e.g. Dropdown)"
+        if selected_value is None:
+            selected_value = str(self.default_value)
+
+        return html.Div(
+            [
+                html.Label(
+                    self.label+':', htmlFor=self.identifier, className="card-element-label"
+                ),
+                self._create_interactice_element_html(selected_value),
+                html.Div(
+                    id = f"{self.identifier}-message",
+                    className='card-element-message'
+                )
+            ],
+            className="card-element",
         )

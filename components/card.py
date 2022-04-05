@@ -4,6 +4,19 @@ from typing import Union
 from dash import html
 
 
+def card_section(children:list) -> html.Div:
+    return html.Div(children, className='card-section')
+
+def card_element(label, value) -> html.Div:
+    return html.Div(
+        [
+            html.Div(label, className="card-element-label"),
+            html.Div(value, className="card-element-value"),
+        ],
+        className="card-element",
+    )
+
+
 def card(children: list, element_id: str = "") -> html.Div:
     """
     A rectangle with an off-white background.
@@ -36,5 +49,5 @@ def card_row(cards: Union[html.Div, list]) -> html.Div:
     """
     return html.Div(
         cards,
-        className="card_row",
+        className="card-row",
     )
