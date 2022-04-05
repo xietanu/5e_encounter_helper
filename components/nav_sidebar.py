@@ -27,13 +27,13 @@ def nav_sidebar(
                     dcc.Link(
                         page.title,
                         href=url_path + query_string,
-                        className="nav_sidebar_link",
+                        className="nav-sidebar-link",
                     ),
-                    className="active_item" if page is current_page else "",
+                    className="active-item" if page is current_page else "",
                 )
                 for url_path, page in dashboard_pages.pages.items()
             ],
         ),
         role="navigation",
-        className="nav_sidebar",
+        className="nav-sidebar",
     )

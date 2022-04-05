@@ -13,6 +13,6 @@ def header(title: str) -> html.Header:
         html.Header: The Header element
     """
     return html.Header(
-        [html.Div([html.H1(title, className="header_title")], className="header_flex")],
-        className="header_container",
+        [html.Div([html.H1(title, className="header-title")], className="header-flex")],
+        className="header-container",
     )

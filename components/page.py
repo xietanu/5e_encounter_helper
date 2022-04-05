@@ -36,7 +36,7 @@ class Page:
         Creates the HTML needed to display the page, using the pages's template.
 
         Args:
-            query_string (str): The query string containing information on filters.
+            query_string (str): The query string containing information on controls.
 
         Returns:
             html.Main: The HTML main element containing the page's content.
@@ -59,24 +59,24 @@ class Page:
             + self.html_template
         )
 
-    def update(self, **filter_values):
+    def update(self, **control_values):
         """
-        Updates the page with the specified filter values.
+        Updates the page with the specified control values.
 
         Args:
-            **filter_values: Arguments for filter_ids with their associated values.
-                May contain any filters, not just those for this page.
+            **control_values: Arguments for controls with their associated values.
+                May contain any controls, not just those for this page.
 
         Returns:
             list: List of the HTML elements to fill in the page.
         """
-        relevant_filters = {
+        relevant_controls = {
             key: value
-            for key, value in filter_values.items()
+            for key, value in control_values.items()
             if key in [user_control.identifier for user_control in self.controls]
         }
 
-        return self.update_function(**relevant_filters)
+        return self.update_function(**relevant_controls)
 
 
 class PageStorageAndLookup:
@@ -133,3 +133,15 @@ class PageStorageAndLookup:
         if pathname in self.pages:
             return self.pages[pathname]
         return None
+
+    def get_all_controls(self) -> list[control.Control]:
+        """
+        Get a list of all the controls used in pages contained in the object.
+
+        Returns:
+            list[control.Control]: List of all controls
+        """
+        controls = set()
+        for _, page in self.pages.items():
+            controls.update(page.controls)
+        return list(controls)
