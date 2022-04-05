@@ -32,9 +32,14 @@ dashboard_pages.add_pages(
             title="Monster Calculator",
             html_template=[
                 comp.page_title("Monster Calculator"),
-                comp.card_row(comp.card(children=["Loading..."], element_id="react-content")),
+                comp.card_row(
+                    comp.card(children=["Loading..."], element_id="react-content")
+                ),
             ],
-            controls=[comp.controls.Monster.CR.value,comp.controls.Monster.FAMILY.value],
+            controls=[
+                comp.controls.Monster.CR.value,
+                comp.controls.Monster.FAMILY.value,
+            ],
             update_function=pages.update_monster_calculator,
         ),
     }
@@ -69,7 +74,10 @@ def display_page(pathname, query_string):
     Output("nav_sidebar", "children"),
     Output("react-content", "children"),
     State("url", "pathname"),
-    [Input(control.identifier, "value") for control in dashboard_pages.get_all_controls()],
+    [
+        Input(control.identifier, "value")
+        for control in dashboard_pages.get_all_controls()
+    ],
 )
 def update_query_string(pathname, *control_values):
     """Update the query string in the url and in the navbar when a control is changed"""
@@ -77,7 +85,9 @@ def update_query_string(pathname, *control_values):
 
     kwargs = {
         control.identifier: str(control_value)
-        for control, control_value in zip(dashboard_pages.get_all_controls(), control_values)
+        for control, control_value in zip(
+            dashboard_pages.get_all_controls(), control_values
+        )
     }
 
     query_string = url_tools.convert.kwargs_to_query_string(**kwargs)

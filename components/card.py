@@ -4,16 +4,21 @@ from typing import Union
 from dash import html
 
 
-def card_section(children:list) -> html.Div:
-    return html.Div(children, className='card-section')
+def card_row(cards: Union[html.Div, list]) -> html.Div:
+    """
+    Creates a horizontal row used to contain cards. The card and card_row work together to create a
+    layout that stretches and shrinks when the user changes the size of the window, or accesses the
+    dashboard from a mobile device.
 
-def card_element(label, value) -> html.Div:
+    Args:
+        cards (list[html.Div]): List of card <div> elements
+
+    Returns:
+        html.Div: The card row element
+    """
     return html.Div(
-        [
-            html.Div(label, className="card-element-label"),
-            html.Div(value, className="card-element-value"),
-        ],
-        className="card-element",
+        cards,
+        className="card-row",
     )
 
 
@@ -35,19 +40,34 @@ def card(children: list, element_id: str = "") -> html.Div:
     return html.Div(children, className="card")
 
 
-def card_row(cards: Union[html.Div, list]) -> html.Div:
+def card_section(children: list) -> html.Div:
     """
-    Creates a horizontal row used to contain cards. The card and card_row work together to create a
-    layout that stretches and shrinks when the user changes the size of the window, or accesses the
-    dashboard from a mobile device.
+    Sub-section to divide up contents in a card
 
     Args:
-        cards (list[html.Div]): List of card <div> elements
+        children (list): Contents of the section
 
     Returns:
-        html.Div: The card row element
+        html.Div: Contains the section
+    """
+    return html.Div(children, className="card-section")
+
+
+def card_element(label: str, value: str) -> html.Div:
+    """
+    Standard label and description for a stat-block.
+
+    Args:
+        label (str): The label for the element.
+        value (str): The contents of the element.
+
+    Returns:
+        html.Div: Contains the stat block element.
     """
     return html.Div(
-        cards,
-        className="card-row",
+        [
+            html.Div(label, className="card-element-label"),
+            html.Div(value, className="card-element-value"),
+        ],
+        className="card-element",
     )

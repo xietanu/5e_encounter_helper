@@ -14,7 +14,8 @@ class Monster(Enum):
     )
 
     FAMILY = dropdown.Dropdown(
-        label = "Type",
-        identifier = "family",
-        options = [family.value.name for family in dnd.Family]
+        label="Type",
+        identifier="family",
+        default_value=dnd.Family.HUMANOID.value.name,
+        options=[family.value.name for family in dnd.Family],
     )

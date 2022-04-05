@@ -133,8 +133,14 @@ class PageStorageAndLookup:
         if pathname in self.pages:
             return self.pages[pathname]
         return None
-    
+
     def get_all_controls(self) -> list[control.Control]:
+        """
+        Get a list of all the controls used in pages contained in the object.
+
+        Returns:
+            list[control.Control]: List of all controls
+        """
         controls = set()
         for _, page in self.pages.items():
             controls.update(page.controls)

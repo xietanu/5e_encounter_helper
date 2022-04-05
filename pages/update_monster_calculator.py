@@ -1,6 +1,7 @@
 """update_monster_calculator function"""
-import components as comp
 import dash
+
+import components as comp
 import dnd
 from components import controls
 

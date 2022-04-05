@@ -14,6 +14,7 @@ def page_title(title: str) -> html.H1:
     """
     return html.H1(title)
 
+
 def section_title(title: str) -> html.H2:
     """
     Create HTML for standard styled page title

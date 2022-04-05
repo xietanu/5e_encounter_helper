@@ -6,12 +6,15 @@ from dnd import families
 BASE_DC = 11
 BASE_PROF_BONUS = 2
 
+
 class Monster:
     """
     Monster stat block
     """
 
-    def __init__(self, name:str, challenge_rating: int, family: families.FamilyDescriptor):
+    def __init__(
+        self, name: str, challenge_rating: int, family: families.FamilyDescriptor
+    ):
         self.name = name
         self.challenge_rating = challenge_rating
         self.family = family
@@ -35,4 +38,3 @@ class Monster:
             int: Stanard difficulty class.
         """
         return BASE_DC + (self.challenge_rating // 2)
-
