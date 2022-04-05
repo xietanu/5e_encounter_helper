@@ -1,6 +1,6 @@
 """update_monster_calculator function"""
-import dash
 import components as comp
+import dnd
 
 
 def update_monster_calculator(challenge_rating: int) -> list:
@@ -13,7 +13,8 @@ def update_monster_calculator(challenge_rating: int) -> list:
     Returns:
         list: List of html components
     """
+    monster = dnd.Monster("Gelatinous Cube", challenge_rating, dnd.Family.OOZE.value)
+
     return [
-        comp.controls.Monster.CR.value.to_html(challenge_rating),
-        dash.html.Div(f"Monster CR: {challenge_rating}"),
-    ]
+        comp.controls.Monster.CR.value.to_html(challenge_rating)
+    ] + monster.generate_stat_block()
