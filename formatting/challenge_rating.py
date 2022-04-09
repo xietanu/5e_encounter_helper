@@ -17,6 +17,12 @@ def format_challenge_rating(challenge_rating: Union[int, str], /) -> str:
         str: Formatted challenge rating for display
     """
     formatted_challenge_rating = str(challenge_rating)
-    if formatting.is_intlike(challenge_rating) and int(challenge_rating) < 0:
-        formatted_challenge_rating = f"1\u2044{2 ** -int(challenge_rating)}"
+    if (
+        formatting.is_intlike(challenge_rating)
+        and int(challenge_rating) <= 0
+        and int(challenge_rating) > -3
+    ):
+        formatted_challenge_rating = f"1\u2044{2 ** -(int(challenge_rating)-1)}"
+    elif formatting.is_intlike(challenge_rating) and int(challenge_rating) == -3:
+        formatted_challenge_rating = "0"
     return formatted_challenge_rating

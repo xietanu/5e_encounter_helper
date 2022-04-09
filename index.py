@@ -38,7 +38,7 @@ dashboard_pages.add_pages(
             controls=[
                 comp.controls.ShortTexts.NAME,
                 comp.controls.Sliders.CR,
-                [comp.controls.Dropdowns.FAMILY, comp.controls.Dropdowns.SIZE],
+                [comp.controls.Dropdowns.SIZE, comp.controls.Dropdowns.FAMILY],
                 [comp.controls.Dropdowns.ARMOUR, comp.controls.Numbers.ARMOUR_BONUS],
             ],
             update_function=pages.update_monster_calculator,

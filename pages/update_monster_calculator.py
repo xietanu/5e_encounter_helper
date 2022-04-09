@@ -35,11 +35,13 @@ def update_monster_calculator(
         comp.card_section(
             [
                 comp.section_title(monster.name),
-                comp.card_element(
-                    "CR:", formatting.format_challenge_rating(monster.challenge_rating)
-                ),
-                dash.html.Div(f"A {monster.size.label} {monster.family.label}"),
+                dash.html.Div(f"{monster.size.label} {monster.family.label.lower()}"),
             ],
+        ),
+        comp.card_section(
+            [
+                comp.card_element("AC", str(monster.armour_class)),
+            ]
         ),
         comp.card_section(
             [
@@ -52,7 +54,11 @@ def update_monster_calculator(
             [
                 comp.card_element("Prof bonus:", str(monster.proficiency_bonus)),
                 comp.card_element("Save DC:", str(monster.save_dc)),
-                comp.card_element("AC:", str(monster.armour_class)),
+                comp.card_element(
+                    "Challenge",
+                    f"{formatting.format_challenge_rating(monster.challenge_rating)} "
+                    f"({monster.experience_points:,} XP)",
+                ),
             ]
         ),
     ]

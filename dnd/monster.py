@@ -1,6 +1,6 @@
 """Monster class"""
 
-from dnd import armours, families, sizes, attributes
+from dnd import armours, constants, families, sizes, attributes
 
 
 BASE_DC = 11
@@ -34,6 +34,16 @@ class Monster:
         self.attributes.update_dex(
             self._expected_armour_class, armour_class_bonus, armour
         )
+
+    @property
+    def experience_points(self) -> int:
+        """
+        Get the number of experience points associated with the challenge rating of the monster.
+
+        Returns:
+            int: Experience points
+        """
+        return constants.XP_FROM_CR[self.challenge_rating]
 
     @property
     def proficiency_bonus(self) -> int:
