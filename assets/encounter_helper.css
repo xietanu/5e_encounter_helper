@@ -27,7 +27,7 @@ body {
 .header-container::after, .header-container::before {
     content: "";
     height: 10px;
-    background-color: #CB3F2A;
+    background-color: #a23222;
     display: block;
 }
 
@@ -83,13 +83,13 @@ body {
 
 .card-section {
     flex: 1 1 auto;
-    color: #CB3F2A;
+    color: #a23222;
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
     justify-content: flex-start;
     padding: 10px 0px;
-    border-bottom: 2px solid #CB3F2A;
+    border-bottom: 2px solid #a23222;
 }
 
 .card-section:last-child {
@@ -134,7 +134,7 @@ body {
     padding-left: 10px;
     font-size: small;
     font-style: italic;
-    color: #CB3F2A;
+    color: #a23222;
 }
 
 .centre-aligned {
@@ -189,7 +189,7 @@ body {
     flex: 1 1 auto;
     font-size: small;
     font-style: italic;
-    color: #758ECD;
+    color: #252629;
 }
 
 .rc-slider-dot {
@@ -215,7 +215,7 @@ body {
 .control-short-text {
     min-width: 10em;
     background-color: #FFFFFF;
-    border-bottom: 2px solid #CB3F2A;
+    border-bottom: 2px solid #a23222;
     padding: 3px 3px 2px 3px
 }
 
@@ -233,4 +233,5 @@ body {
 
 h2 {
     font-variant: small-caps;
+    margin: 0px;
 }

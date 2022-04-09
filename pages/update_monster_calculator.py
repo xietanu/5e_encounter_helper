@@ -35,12 +35,13 @@ def update_monster_calculator(
         comp.card_section(
             [
                 comp.section_title(monster.name),
-                dash.html.Div(f"{monster.size.label} {monster.family.label.lower()}"),
+                comp.subtitle(f"{monster.size.label} {monster.family.label.lower()}"),
             ],
         ),
         comp.card_section(
             [
-                comp.card_element("AC", str(monster.armour_class)),
+                comp.card_element("Armor Class", str(monster.armour_class)),
+                comp.card_element("Hit Points", f"{monster.hit_points.average_value} ({monster.hit_points})")
             ]
         ),
         comp.card_section(

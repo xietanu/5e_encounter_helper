@@ -2,14 +2,15 @@
 from dataclasses import dataclass
 from enum import Enum
 
+from dnd import dice
+
 
 @dataclass
 class SizeData:
     """Contains data needed to handle monster sizes"""
 
     label: str
-    die_name: str
-    avg_die_value: float
+    die: dice.Die
     damage_dice: int
     token_size: int
 
@@ -17,8 +18,8 @@ class SizeData:
 class Sizes(SizeData, Enum):
     """Possible Monster sizes"""
 
-    TINY = "Tiny", "d4", 2.5, 1, 1
-    SMALL = "Small", "d6", 3.5, 1, 1
-    MEDIUM = "Medium", "d8", 4.5, 1, 1
-    LARGE = "Large", "d10", 5.5, 2, 2
-    HUGE = "Huge", "d12", 6.5, 3, 3
+    TINY = "Tiny", dice.Die(4), 1, 1
+    SMALL = "Small", dice.Die(6), 1, 1
+    MEDIUM = "Medium", dice.Die(8), 1, 1
+    LARGE = "Large", dice.Die(10), 2, 2
+    HUGE = "Huge", dice.Die(12), 3, 3
