@@ -5,7 +5,7 @@ from typing import Optional
 from dash import html
 
 
-@dataclass
+@dataclass(frozen=True)
 class Control:
     """
     A Control is used by the dashboard to get information from users
@@ -17,15 +17,20 @@ class Control:
     identifier: str
     label: str
     default_value: str
+    
+    def __init__(self, *_):
+        self._add_callback()
+    
+    @property
+    def component_property(self):
+        return "value"
 
     def _create_interactice_element_html(self, selected_value: str):
         raise NotImplementedError()
 
     def to_html(self, selected_value: Optional[str] = None) -> html.Div:
         """
-        Creates a HTML representation of the filter.
-
-        Dummy function to be built on top of for child classes.
+        Creates a HTML representation of the control.
 
         Args:
             selected_value (str, optional): Currently selected value. Defaults to None.
@@ -50,3 +55,6 @@ class Control:
             ],
             className="card-element",
         )
+
+    def _add_callback(self):
+        return

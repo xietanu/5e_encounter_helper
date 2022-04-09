@@ -3,6 +3,7 @@ body {
     font-family: Tahoma, sans-serif;
     background-color: #F0ECE9;
     color: #252629;
+    font-size: 12pt;
 }
 
 .header-flex {
@@ -71,10 +72,12 @@ body {
 }
 
 .card-section {
-    flex: 1 1 100%;
+    flex: 1 1 auto;
     color: #CB3F2A;
     display: flex;
     flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
     padding: 10px 0px;
     border-bottom: 2px solid #CB3F2A;
 }
@@ -83,24 +86,36 @@ body {
     border-bottom: 0px;
 }
 
+.card-element-row {
+    flex: 1 1 auto;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: baseline;
+    justify-content: start;
+    padding: 0px 0px;
+}
+
+
 .card-element {
     flex: 1 1;
     display: flex;
     flex-flow: row nowrap;
     align-items: baseline;
     justify-content: flex-start;
+    padding: 2px 20px 2px 0px;
 }
 
 .card-element-label {
-    flex: 0 1;
+    flex: 0 0 auto;
     font-weight: bold;
-    display: flex;
-    flex-flow: row nowrap;
+    display: block;
     padding: 2px 5px 2px 0px;
 }
 
 .card-element-value {
+    flex: 0 0 auto;
     padding: 2px 5px 2px 0px;
+    font-size: 12pt;
 }
 
 .card-element-message {
@@ -112,11 +127,15 @@ body {
     color: #CB3F2A;
 }
 
+.centre-aligned {
+    align-items: center
+}
+
 .main {
     display: flex;
     flex-flow: column nowrap;
     justify-content: start;
-    align-items: stretch;
+    align-items: flex-start;
     height: 100%;
     width: 100%;
 }
@@ -157,7 +176,35 @@ body {
 }
 
 .dnd-hint {
+    flex: 1 1 auto;
     font-size: small;
     font-style: italic;
     color: #758ECD;
+}
+
+.rc-slider-dot {
+    border-color: #252629
+}
+
+.rc-slider-handle, .rc-slider-dot-active {
+    border-color: #FD9653;
+}
+
+.rc-slider-track {
+    background-color: #FD9653;
+}
+
+.rc-slider-rail {
+    background-color: #252629;
+}
+
+.rc-slider-mark-text {
+    color: #252629 !important;
+}
+
+.control-short-text {
+    min-width: 10em;
+    background-color: #FFFFFF;
+    border-bottom: 2px solid #CB3F2A;
+    padding: 3px 3px 2px 3px
 }

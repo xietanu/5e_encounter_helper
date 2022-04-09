@@ -1,4 +1,4 @@
 """Easier imports for controls"""
-from components.controls.dropdown import Dropdown
-from components.controls.monster import Monster
-from components.controls.slider import Slider
+from components.controls.dropdown import Dropdowns
+from components.controls.slider import Sliders
+from components.controls.short_text import ShortTexts

@@ -6,7 +6,7 @@ import dnd
 from components import controls
 
 
-def update_monster_calculator(challenge_rating: str, family: str) -> list:
+def update_monster_calculator(name: str, challenge_rating: str, family: str, size: str) -> list:
     """
     Generate the reactive components for the monster calculator page
 
@@ -20,21 +20,36 @@ def update_monster_calculator(challenge_rating: str, family: str) -> list:
     if challenge_rating.isnumeric():
         cr_int = int(challenge_rating)
 
-    monster = dnd.Monster("Gelatinous Cube", cr_int, dnd.Family.OOZE.value)
+    monster = dnd.Monster(
+        name,
+        challenge_rating =cr_int,
+        family = dnd.Families[family],
+        size = dnd.Sizes[size],
+        armour = dnd.Armours.HEAVY,
+    )
 
     return [
         comp.card_section(
             [
-                comp.card_element("Name:", monster.name),
-                controls.Monster.CR.value.to_html(challenge_rating),
-                dash.html.Div(controls.Monster.FAMILY.value.to_html(family)),
+                controls.ShortTexts.NAME.to_html(name),
+                comp.card_element_row(
+                    [
+                        controls.Dropdowns.SIZE.to_html(size),
+                        controls.Dropdowns.FAMILY.to_html(family),
+                    ]
+                ),
+                
+                controls.Sliders.CR.to_html(challenge_rating),
+                
                 dash.html.Div(f"{monster.family.description}", className="dnd-hint"),
             ],
         ),
         comp.card_section(
             [
-                dash.html.Div(f"Prof bonus: {monster.proficiency_bonus}"),
-                dash.html.Div(f"Save DC: {monster.save_dc}"),
+                comp.card_element("Prof bonus:",str(monster.proficiency_bonus)),
+                comp.card_element("Save DC:",str(monster.save_dc)),
+                comp.card_element("Dex Mod:",str(monster.dex)),
+                comp.card_element("AC:",str(monster.armour_class)),
             ]
         ),
     ]

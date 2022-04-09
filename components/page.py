@@ -1,5 +1,5 @@
 """Page class"""
-from typing import Callable
+from typing import Callable, Optional
 
 from dash import html
 from url_tools import convert
@@ -71,7 +71,7 @@ class Page:
             list: List of the HTML elements to fill in the page.
         """
         relevant_controls = {
-            key: value
+            key: str(value)
             for key, value in control_values.items()
             if key in [user_control.identifier for user_control in self.controls]
         }
@@ -118,7 +118,7 @@ class PageStorageAndLookup:
         for url_path, page in pages.items():
             self.add_page(url_path, page)
 
-    def get_page(self, pathname: str) -> Page:
+    def get_page(self, pathname: str) -> Optional[Page]:
         """
         Find a stored page from its URL path.
 
@@ -144,4 +144,4 @@ class PageStorageAndLookup:
         controls = set()
         for _, page in self.pages.items():
             controls.update(page.controls)
-        return list(controls)
+        return sorted(list(controls),key=lambda x: x.label)

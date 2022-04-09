@@ -53,6 +53,18 @@ def card_section(children: list) -> html.Div:
     return html.Div(children, className="card-section")
 
 
+def card_element_row(children: list) -> html.Div:
+    """
+    Creates a wrappable row of card elements
+
+    Args:
+        children (list): _description_
+
+    Returns:
+        html.Div: _description_
+    """
+    return html.Div(children, className="card-element-row")
+
 def card_element(label: str, value: str) -> html.Div:
     """
     Standard label and description for a stat-block.
