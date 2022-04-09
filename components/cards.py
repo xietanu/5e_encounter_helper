@@ -4,7 +4,7 @@ from typing import Union
 from dash import html
 
 
-def card_row(cards: Union[html.Div, list]) -> html.Div:
+def card_row(cards: Union[html.Div, list[html.Div]]) -> html.Div:
     """
     Creates a horizontal row used to contain cards. The card and card_row work together to create a
     layout that stretches and shrinks when the user changes the size of the window, or accesses the
@@ -64,6 +64,7 @@ def card_element_row(children: list) -> html.Div:
         html.Div: _description_
     """
     return html.Div(children, className="card-element-row")
+
 
 def card_element(label: str, value: str) -> html.Div:
     """

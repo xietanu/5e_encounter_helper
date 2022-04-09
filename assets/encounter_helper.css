@@ -60,6 +60,7 @@ body {
     flex-flow: row wrap;
     justify-content: space-around;
     align-items: stretch;
+    padding: 10px 0px;
 }
 
 .card-row::after, .card-row::before{
@@ -90,17 +91,17 @@ body {
     flex: 1 1 auto;
     display: flex;
     flex-flow: row wrap;
-    align-items: baseline;
-    justify-content: start;
+    align-items: center;
+    justify-content: flex-start;
     padding: 0px 0px;
 }
 
 
 .card-element {
-    flex: 1 1;
+    flex: 0 1;
     display: flex;
     flex-flow: row nowrap;
-    align-items: baseline;
+    align-items: center;
     justify-content: flex-start;
     padding: 2px 20px 2px 0px;
 }
@@ -207,4 +208,20 @@ body {
     background-color: #FFFFFF;
     border-bottom: 2px solid #CB3F2A;
     padding: 3px 3px 2px 3px
+}
+
+.attribute-block {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 0px 10px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.attribute-title {
+    font-weight: bold;
+}
+
+h2 {
+    font-variant: small-caps;
 }

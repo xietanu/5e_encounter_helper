@@ -1,4 +1,5 @@
 """Easier imports for controls"""
 from components.controls.dropdown import Dropdowns
 from components.controls.slider import Sliders
-from components.controls.short_text import ShortTexts
+from components.controls.text import ShortTexts, Numbers
+from components.controls.control_panel import create_control_panel, GroupedControlList

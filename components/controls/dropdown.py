@@ -33,6 +33,8 @@ class DropdownControl(control.Control):
 
 
 class Dropdowns(DropdownControl, Enum):
+    """Dropdown controls"""
+
     FAMILY = (
         "family",
         "Type",
@@ -47,4 +49,12 @@ class Dropdowns(DropdownControl, Enum):
         dnd.Sizes.MEDIUM.name,
         tuple(size.label for size in dnd.Sizes),
         tuple(size.name for size in dnd.Sizes),
+    )
+
+    ARMOUR = (
+        "armour",
+        "Armour",
+        dnd.Armours.NATURAL.name,
+        tuple(armour.label for armour in dnd.Armours),
+        tuple(armour.name for armour in dnd.Armours),
     )

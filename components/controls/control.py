@@ -17,13 +17,6 @@ class Control:
     identifier: str
     label: str
     default_value: str
-    
-    def __init__(self, *_):
-        self._add_callback()
-    
-    @property
-    def component_property(self):
-        return "value"
 
     def _create_interactice_element_html(self, selected_value: str):
         raise NotImplementedError()
@@ -49,12 +42,6 @@ class Control:
                     className="card-element-label",
                 ),
                 self._create_interactice_element_html(selected_value),
-                html.Div(
-                    id=f"{self.identifier}-message", className="card-element-message"
-                ),
             ],
             className="card-element",
         )
-
-    def _add_callback(self):
-        return
