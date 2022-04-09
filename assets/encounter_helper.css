@@ -60,14 +60,23 @@ body {
     flex-flow: row wrap;
     justify-content: space-around;
     align-items: stretch;
-    padding: 10px 0px;
+    margin: 10px 0px;
+    border-top: 2px solid #252629;
+    border-bottom: 2px solid #252629;
 }
 
-.card-row::after, .card-row::before{
+.stat-block {
+    border-top: 0px;
+    border-bottom: 0px;
+    box-shadow: 0px 0px 10px 3px;
+    color: #a8a5a3;
+}
+
+.stat-block::after, .stat-block::before{
     content: "";
     height: 5px;
     background-color: #FD9653;
-    border: 1px solid #CB3F2A;
+    border: 1px solid #252629;
     width:100%;
     display: block;
 }

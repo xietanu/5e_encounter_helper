@@ -33,4 +33,4 @@ def create_control_panel(control_groups: GroupedControlList, **control_kwargs):
                 )
             )
 
-    return cards.card_row(cards.card(controls_html))
+    return cards.card_row(cards.card([cards.card_section(controls_html)]))

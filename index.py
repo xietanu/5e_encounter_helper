@@ -32,7 +32,8 @@ dashboard_pages.add_pages(
             title="Monster Calculator",
             html_template=[
                 comp.card_row(
-                    comp.card(children=["Loading..."], element_id="react-content")
+                    comp.card(children=["Loading..."], element_id="react-content"),
+                    stat_block = True
                 ),
             ],
             controls=[
