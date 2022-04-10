@@ -5,7 +5,7 @@ import formatting
 
 
 def update_monster_calculator(
-    monster_name, size, family, challenge_rating, armour, armour_class_bonus
+    monster_name, size, family, challenge_rating, armour, armour_class_bonus, **speed_kwargs
 ) -> list:
     """
     Generate the reactive components for the monster calculator page
@@ -27,6 +27,7 @@ def update_monster_calculator(
         armour_class_bonus=int(armour_class_bonus)
         if armour_class_bonus.isnumeric()
         else 0,
+        **speed_kwargs,
     )
 
     return [
@@ -43,6 +44,7 @@ def update_monster_calculator(
                     "Hit Points",
                     f"{monster.hit_points.average_value} ({monster.hit_points})",
                 ),
+                comp.card_element("Speed", ', '.join(str(speed) for speed in monster.speeds)),
             ]
         ),
         comp.card_section(

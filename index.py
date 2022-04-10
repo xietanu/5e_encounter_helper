@@ -45,6 +45,16 @@ dashboard_pages.add_pages(
                 "Armour": [
                     [comp.controls.Dropdowns.ARMOUR, comp.controls.Numbers.ARMOUR_BONUS]
                 ],
+                "Speed": [
+                    [
+                        comp.controls.Numbers.BASIC_SPEED,
+                        comp.controls.Numbers.FLYING,
+                        comp.controls.Numbers.HOVERING,
+                        comp.controls.Numbers.BURROWING,
+                        comp.controls.Numbers.CLIMBING,
+                        comp.controls.Numbers.SWIMMING,
+                    ]
+                ],
             },
             update_function=pages.update_monster_calculator,
         ),

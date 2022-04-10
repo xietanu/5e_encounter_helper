@@ -1,6 +1,6 @@
 """Monster class"""
 
-from dnd import armours, constants, families, sizes, attributes, dice
+from dnd import armours, constants, families, sizes, attributes, dice, speed
 
 
 BASE_DC = 11
@@ -21,6 +21,7 @@ class Monster:
         size: sizes.SizeData,
         armour: armours.ArmourData,
         armour_class_bonus: int = 0,
+        **speed_kwargs
     ):
         self.name = name
         self.challenge_rating = challenge_rating
@@ -34,6 +35,7 @@ class Monster:
         self.attributes.update_dex(
             self._expected_armour_class, armour_class_bonus, armour
         )
+        self.speeds = speed.Speeds(**speed_kwargs)
 
     @property
     def experience_points(self) -> int:

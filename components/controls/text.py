@@ -37,6 +37,7 @@ class NumberControl(control.Control):
 
     min_value: int = 100
     max_value: int = -100
+    step: int = 1
 
     def _create_interactice_element_html(self, selected_value: str):
         return dcc.Input(
@@ -47,6 +48,7 @@ class NumberControl(control.Control):
             style={"width": f"{max(2.5,len(str(selected_value))*0.6)}em"},
             min=self.min_value,
             max=self.max_value,
+            step=self.step,
         )
 
 
@@ -54,3 +56,9 @@ class Numbers(NumberControl, Enum):
     """Integer text inputs"""
 
     ARMOUR_BONUS = ("armour_class_bonus", "Armour class bonus", "0", 0, 10)
+    BASIC_SPEED = ("basic_speed", "Speed", "30", 0, 150, 5)
+    FLYING = ("flying", "Flying", "0", 0, 150, 5)
+    HOVERING = ("hovering", "Hovering", "0", 0, 150, 5)
+    BURROWING = ("burrowing", "Burrowing", "0", 0, 150, 5)
+    CLIMBING = ("climbing", "Climbing", "0", 0, 150, 5)
+    SWIMMING = ("swimming", "Swimming", "0", 0, 150, 5)

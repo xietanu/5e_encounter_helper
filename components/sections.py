@@ -28,6 +28,6 @@ def collapsible_section(title: str, children: list) -> html.Details:
     """
     return html.Details(
         children=[html.Summary(title)] + children,
-        className="card-section",
+        className="control-section",
         open=True,
     )

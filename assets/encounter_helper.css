@@ -59,17 +59,15 @@ body {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-    align-items: stretch;
+    align-items: flex-start;
     margin: 10px 0px;
-    border-top: 2px solid #252629;
-    border-bottom: 2px solid #252629;
 }
 
 .stat-block {
     border-top: 0px;
     border-bottom: 0px;
-    box-shadow: 0px 0px 10px 3px;
-    color: #a8a5a3;
+    box-shadow: 0px 0px 10px 3px #a8a5a3;
+    background: #fff
 }
 
 .stat-block::after, .stat-block::before{
@@ -96,15 +94,28 @@ body {
     border-bottom: 0px;
 }
 
-details.card-section{
-    padding: 10px 10px;
-    margin: 5px;
-    border: 1px solid #252629;
+.control-section{
+    padding: 0px;
+    margin: 0px 5px 10px 0px;
+    border-left: 2px solid #a23222;
+    flex: 1 1 auto;
+    color: #a23222;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
-details.card-section:last-child {
-    border: 1px solid #252629;
+.control-section > div {
+    padding: 5px 10px
 }
+
+summary {
+    color: #F0ECE9;
+    background-color: #a23222;
+    padding: 3px 8px;
+}
+
 .card-element-row {
     flex: 1 1 auto;
     display: flex;
