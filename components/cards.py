@@ -4,7 +4,9 @@ from typing import Union
 from dash import html
 
 
-def card_row(cards: Union[html.Div, list[html.Div]], *, stat_block:bool = False) -> html.Div:
+def card_row(
+    cards: Union[html.Div, list[html.Div]], *, stat_block: bool = False, **div_kwargs
+) -> html.Div:
     """
     Creates a horizontal row used to contain cards. The card and card_row work together to create a
     layout that stretches and shrinks when the user changes the size of the window, or accesses the
@@ -18,7 +20,8 @@ def card_row(cards: Union[html.Div, list[html.Div]], *, stat_block:bool = False)
     """
     return html.Div(
         cards,
-        className="card-row" + (" stat-block" if stat_block == True else ""),
+        className="card-row" + (" stat-block" if stat_block else ""),
+        **div_kwargs
     )
 
 
@@ -40,20 +43,7 @@ def card(children: list, element_id: str = "") -> html.Div:
     return html.Div(children, className="card")
 
 
-def card_section(children: list) -> html.Div:
-    """
-    Sub-section to divide up contents in a card
-
-    Args:
-        children (list): Contents of the section
-
-    Returns:
-        html.Div: Contains the section
-    """
-    return html.Div(children, className="card-section")
-
-
-def card_element_row(children: list) -> html.Div:
+def card_element_row(children: list, **div_kwargs) -> html.Div:
     """
     Creates a wrappable row of card elements
 
@@ -63,7 +53,7 @@ def card_element_row(children: list) -> html.Div:
     Returns:
         html.Div: _description_
     """
-    return html.Div(children, className="card-element-row")
+    return html.Div(children, className="card-element-row", **div_kwargs)
 
 
 def card_element(label: str, value: str) -> html.Div:

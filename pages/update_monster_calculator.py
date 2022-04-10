@@ -1,6 +1,4 @@
 """update_monster_calculator function"""
-import dash
-
 import components as comp
 import dnd
 import formatting
@@ -41,7 +39,10 @@ def update_monster_calculator(
         comp.card_section(
             [
                 comp.card_element("Armor Class", str(monster.armour_class)),
-                comp.card_element("Hit Points", f"{monster.hit_points.average_value} ({monster.hit_points})")
+                comp.card_element(
+                    "Hit Points",
+                    f"{monster.hit_points.average_value} ({monster.hit_points})",
+                ),
             ]
         ),
         comp.card_section(

@@ -49,7 +49,7 @@ body {
     flex-flow: column nowrap;
     align-items: stretch;
     justify-content: flex-start;
-    flex: 1 1 100%;
+    flex: 1 1;
     padding: 0px 10px;
     margin: 0px;
 }
@@ -96,6 +96,15 @@ body {
     border-bottom: 0px;
 }
 
+details.card-section{
+    padding: 10px 10px;
+    margin: 5px;
+    border: 1px solid #252629;
+}
+
+details.card-section:last-child {
+    border: 1px solid #252629;
+}
 .card-element-row {
     flex: 1 1 auto;
     display: flex;

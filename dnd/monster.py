@@ -91,17 +91,29 @@ class Monster:
 
     @property
     def _expected_hp(self) -> int:
+        """
+        Expected hp based on the creature's challenge rating and AC.
+
+        Returns:
+            int: expected hit points.
+        """
         modifidied_challenge_rating = self.challenge_rating + (
             (self._expected_armour_class - self.armour_class) // 2
         )
         if modifidied_challenge_rating <= 0:
             return {-3: 3, -2: 9, -1: 15, 0: 24}[max(modifidied_challenge_rating, -3)]
-        elif modifidied_challenge_rating <= 7:
+        if modifidied_challenge_rating <= 7:
             return modifidied_challenge_rating * 15 + 15
         return modifidied_challenge_rating * 15
 
     @property
     def hit_points(self) -> dice.DiceFormula:
+        """
+        Number of hit points the monster has, as a dice formula.
+
+        Returns:
+            dice.DiceFormula: Monster hit points
+        """
         hp_level = round(
             self._expected_hp
             / (self.size.die.average_value + self.attributes.con.modifier)

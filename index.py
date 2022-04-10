@@ -33,15 +33,19 @@ dashboard_pages.add_pages(
             html_template=[
                 comp.card_row(
                     comp.card(children=["Loading..."], element_id="react-content"),
-                    stat_block = True
+                    stat_block=True,
                 ),
             ],
-            controls=[
-                comp.controls.ShortTexts.NAME,
-                comp.controls.Sliders.CR,
-                [comp.controls.Dropdowns.SIZE, comp.controls.Dropdowns.FAMILY],
-                [comp.controls.Dropdowns.ARMOUR, comp.controls.Numbers.ARMOUR_BONUS],
-            ],
+            controls={
+                "Basics": [
+                    comp.controls.ShortTexts.NAME,
+                    comp.controls.Sliders.CR,
+                    [comp.controls.Dropdowns.SIZE, comp.controls.Dropdowns.FAMILY],
+                ],
+                "Armour": [
+                    [comp.controls.Dropdowns.ARMOUR, comp.controls.Numbers.ARMOUR_BONUS]
+                ],
+            },
             update_function=pages.update_monster_calculator,
         ),
     }

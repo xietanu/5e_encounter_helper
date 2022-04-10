@@ -79,12 +79,13 @@ class Page:
             list[control.Control]: List of the controls used on the page
         """
         control_list = []
-        for control_group in self.controls:
-            if isinstance(control_group, control.Control):
-                control_list.append(control_group)
-            else:
-                for user_control in control_group:
-                    control_list.append(user_control)
+        for _, control_group in self.controls.items():
+            for control_line in control_group:
+                if isinstance(control_line, control.Control):
+                    control_list.append(control_line)
+                else:
+                    for user_control in control_line:
+                        control_list.append(user_control)
         return control_list
 
 

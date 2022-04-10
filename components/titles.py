@@ -27,5 +27,6 @@ def section_title(title: str) -> html.H2:
     """
     return html.H2(title)
 
+
 def subtitle(title: str) -> html.Div:
     return html.Div(title, className="dnd-hint")
