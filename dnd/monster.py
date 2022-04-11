@@ -20,8 +20,9 @@ class Monster:
         family: families.FamilyData,
         size: sizes.SizeData,
         armour: armours.ArmourData,
+        speeds: dict[str, int],
+        base_attribute_modifiers: dict[str, int],
         armour_class_bonus: int = 0,
-        **speed_kwargs
     ):
         self.name = name
         self.challenge_rating = challenge_rating
@@ -29,13 +30,18 @@ class Monster:
         self.size = size
         self.armour = armour
         self.armour_class_bonus = armour_class_bonus
+        
+        if family.stat_modifiers is not None:
+            for key, value in base_attribute_modifiers.items():
+                if key in family.stat_modifiers:
+                    base_attribute_modifiers[key] = value + family.stat_modifiers[key]
 
-        self.attributes = attributes.Attributes()
+        self.attributes = attributes.Attributes(**base_attribute_modifiers)
 
         self.attributes.update_dex(
             self._expected_armour_class, armour_class_bonus, armour
         )
-        self.speeds = speed.Speeds(**speed_kwargs)
+        self.speeds = speed.Speeds(**speeds)
 
     @property
     def experience_points(self) -> int:

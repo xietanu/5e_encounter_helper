@@ -55,6 +55,16 @@ dashboard_pages.add_pages(
                         comp.controls.Numbers.SWIMMING,
                     ]
                 ],
+                "Attribute Modifiers": [
+                    [
+                        comp.controls.Numbers.STR,
+                        comp.controls.Numbers.DEX,
+                        comp.controls.Numbers.CON,
+                        comp.controls.Numbers.INT,
+                        comp.controls.Numbers.WIS,
+                        comp.controls.Numbers.CHA,
+                    ]
+                ],
             },
             update_function=pages.update_monster_calculator,
         ),

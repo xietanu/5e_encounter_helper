@@ -1,6 +1,7 @@
 """Classes for presenting monster type"""
 from dataclasses import dataclass
 from enum import Enum
+from typing import Optional
 
 
 @dataclass
@@ -9,6 +10,7 @@ class FamilyData:
 
     label: str
     description: str
+    stat_modifiers: Optional[dict] = None
 
 
 class Families(FamilyData, Enum):
@@ -44,4 +46,5 @@ class Families(FamilyData, Enum):
     UNDEAD = (
         "Undead",
         "Undead creatures were once alive, and have been reanimated by unnatural forces.",
+        {'intelligence':-1,'con':3,'wis':-1,'cha':-3}
     )

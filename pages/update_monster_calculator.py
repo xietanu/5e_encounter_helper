@@ -5,7 +5,24 @@ import formatting
 
 
 def update_monster_calculator(
-    monster_name, size, family, challenge_rating, armour, armour_class_bonus, **speed_kwargs
+    monster_name,
+    size,
+    family,
+    challenge_rating,
+    armour,
+    armour_class_bonus,
+    basic_speed,
+    flying,
+    hovering,
+    burrowing,
+    climbing,
+    swimming,
+    strength,
+    dex,
+    con,
+    intelligence,
+    wis,
+    cha,
 ) -> list:
     """
     Generate the reactive components for the monster calculator page
@@ -16,6 +33,24 @@ def update_monster_calculator(
     Returns:
         list: List of html components
     """
+    speeds = {
+        "basic_speed": int(basic_speed),
+        "flying": int(flying),
+        "hovering": int(hovering),
+        "burrowing": int(burrowing),
+        "climbing": int(climbing),
+        "swimming": int(swimming),
+    }
+
+    base_attribute_modifiers = {
+        "strength": int(strength),
+        "dex": int(dex),
+        "con": int(con),
+        "intelligence": int(intelligence),
+        "wis": int(wis),
+        "cha": int(cha),
+    }
+
     monster = dnd.Monster(
         name=monster_name,
         challenge_rating=int(challenge_rating)
@@ -27,7 +62,8 @@ def update_monster_calculator(
         armour_class_bonus=int(armour_class_bonus)
         if armour_class_bonus.isnumeric()
         else 0,
-        **speed_kwargs,
+        speeds=speeds,
+        base_attribute_modifiers=base_attribute_modifiers,
     )
 
     return [
@@ -39,12 +75,21 @@ def update_monster_calculator(
         ),
         comp.card_section(
             [
-                comp.card_element("Armor Class", str(monster.armour_class)),
+                comp.card_element(
+                    "Armor Class",
+                    f"{monster.armour_class}"
+                    + (f" ({monster.armour.label.lower()} armor)"
+                    if monster.armour.label != "Natural"
+                    or monster.armour_class_bonus > 0
+                    else ""),
+                ),
                 comp.card_element(
                     "Hit Points",
                     f"{monster.hit_points.average_value} ({monster.hit_points})",
                 ),
-                comp.card_element("Speed", ', '.join(str(speed) for speed in monster.speeds)),
+                comp.card_element(
+                    "Speed", ", ".join(str(speed) for speed in monster.speeds)
+                ),
             ]
         ),
         comp.card_section(

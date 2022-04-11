@@ -11,7 +11,12 @@ class AttributeData:
     """Class for data associated with an individual attribute"""
 
     name: str
-    modifier: int = 0
+    base_modifier: int = 0
+    calc_modifier: int = 0
+    
+    @property
+    def modifier(self) -> int:
+        return self.base_modifier + self.calc_modifier
 
     @property
     def value(self) -> int:
@@ -53,13 +58,21 @@ class AttributeData:
 class Attributes:
     """Class for a monster's attributes"""
 
-    def __init__(self):
-        self.str = AttributeData("Strength")
-        self.dex = AttributeData("Dexterity")
-        self.con = AttributeData("Constitution")
-        self.int = AttributeData("Intelligence")
-        self.wis = AttributeData("Wisdom")
-        self.cha = AttributeData("Charisma")
+    def __init__(
+        self,
+        strength: int = 0,
+        dex: int = 0,
+        con: int = 0,
+        intelligence: int = 0,
+        wis: int = 0,
+        cha: int = 0,
+    ) -> None:
+        self.str = AttributeData("Strength", strength)
+        self.dex = AttributeData("Dexterity", dex)
+        self.con = AttributeData("Constitution", con)
+        self.int = AttributeData("Intelligence", intelligence)
+        self.wis = AttributeData("Wisdom", wis)
+        self.cha = AttributeData("Charisma", cha)
 
     def __iter__(self):
         return iter([self.str, self.dex, self.con, self.int, self.wis, self.cha])
@@ -75,6 +88,6 @@ class Attributes:
             armour_class_bonus (int): Any armour class bonus (e.g. from shields)
             armour (armours.ArmourData): Current armour used by the monster
         """
-        self.dex.modifier = min(
-            expected_ac - armour_class_bonus - armour.base_ac, armour.max_dex_mod
+        self.dex.calc_modifier = (
+            min(expected_ac - armour_class_bonus - armour.base_ac, armour.max_dex_mod)
         )
