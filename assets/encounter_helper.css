@@ -46,7 +46,7 @@ body {
 
 .card {
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: column wrap;
     align-items: stretch;
     justify-content: flex-start;
     flex: 1 1;
@@ -136,16 +136,24 @@ summary {
 }
 
 .card-element-label {
-    flex: 0 0 auto;
+    flex: 0 1 auto;
     font-weight: bold;
     display: block;
     padding: 2px 5px 2px 0px;
 }
 
 .card-element-value {
-    flex: 0 0 auto;
+    flex: 0 1 auto;
     padding: 2px 5px 2px 0px;
-    font-size: 12pt;
+}
+
+.trait-label {
+    color: #252629;
+    font-style: italic;
+}
+
+.trait-value {
+    color: #252629
 }
 
 .card-element-message {

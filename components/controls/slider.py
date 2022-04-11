@@ -72,7 +72,7 @@ class Sliders(SliderControl, Enum):
     CR = (
         "challenge_rating",
         "CR",
-        "0",
+        "1",
         (-3, 30),
         tuple(str(value) for value in range(-3, 31)),
         tuple(formatting.format_challenge_rating(value) for value in range(-3, 31)),

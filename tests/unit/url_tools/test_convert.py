@@ -17,7 +17,7 @@ def test_query_string_to_kwargs_single():
     """Test basic key:value pair is read correctly"""
     kwargs = convert_query.query_string_to_kwargs("?key=value")
 
-    kwargs_expected = {"key": "value"}
+    kwargs_expected = {"key": ["value"]}
 
     assert kwargs == kwargs_expected
 
@@ -26,7 +26,7 @@ def test_query_string_to_kwargs_multiple_arguments():
     """Test multiple key:value pairs are read correctly"""
     kwargs = convert_query.query_string_to_kwargs("?key=value&second_key=second_value")
 
-    kwargs_expected = {"key": "value", "second_key": "second_value"}
+    kwargs_expected = {"key": ["value"], "second_key": ["second_value"]}
 
     assert kwargs == kwargs_expected
 
@@ -35,7 +35,7 @@ def test_query_string_to_kwargs_arg_with_spaces():
     """Check that spaces are handled correctly"""
     kwargs = convert_query.query_string_to_kwargs("?key=value+with+spaces")
 
-    kwargs_expected = {"key": "value with spaces"}
+    kwargs_expected = {"key": ["value with spaces"]}
 
     assert kwargs == kwargs_expected
 

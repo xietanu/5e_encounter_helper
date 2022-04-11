@@ -23,14 +23,14 @@ def create_control_panel(control_groups: GroupedControlList, **control_kwargs):
         for control_line in control_group:
             if isinstance(control_line, control.Control):
                 controls_lines.append(
-                    control_line.to_html(control_kwargs[control_line.identifier])
+                    control_line.to_html(control_kwargs[control_line.identifier][0])
                 )
             else:
                 controls_lines.append(
                     cards.card_element_row(
                         [
                             user_control.to_html(
-                                control_kwargs[user_control.identifier]
+                                control_kwargs[user_control.identifier][0]
                             )
                             for user_control in control_line
                         ]

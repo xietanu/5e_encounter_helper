@@ -23,6 +23,7 @@ def update_monster_calculator(
     intelligence,
     wis,
     cha,
+    traits_block,
 ) -> list:
     """
     Generate the reactive components for the monster calculator page
@@ -65,6 +66,15 @@ def update_monster_calculator(
         speeds=speeds,
         base_attribute_modifiers=base_attribute_modifiers,
     )
+    
+    traits = traits_block.split('\n')
+    traits_elements = []
+    for trait in traits:
+        if trait.count('.') == 0:
+            traits_elements.append(comp.trait(trait+'.',""))
+        else:
+            trait_name, trait_value = trait.split('.', 1)
+            traits_elements.append(comp.trait(trait_name+'.',trait_value))
 
     return [
         comp.card_section(
@@ -110,4 +120,7 @@ def update_monster_calculator(
                 ),
             ]
         ),
+        comp.card_section(
+            traits_elements
+        ) if len(traits_elements) > 0 else None
     ]

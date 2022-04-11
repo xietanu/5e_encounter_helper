@@ -12,3 +12,4 @@ from components.nav_sidebar import nav_sidebar
 from components.page import Page, PageStorageAndLookup
 from components.titles import page_title, section_title, subtitle
 from components.sections import card_section, collapsible_section
+from components.trait import trait

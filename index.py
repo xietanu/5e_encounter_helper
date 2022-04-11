@@ -65,6 +65,7 @@ dashboard_pages.add_pages(
                         comp.controls.Numbers.CHA,
                     ]
                 ],
+                "Traits": [comp.controls.TextArea.TRAITS],
             },
             update_function=pages.update_monster_calculator,
         ),
