@@ -2,7 +2,7 @@
 from typing import Callable, Optional
 
 from dash import html
-from url_tools import convert
+from url_tools import convert_query
 
 from components import main
 from components.controls import control, control_panel, GroupedControlList
@@ -41,7 +41,7 @@ class Page:
         Returns:
             html.Main: The HTML main element containing the page's content.
         """
-        kwargs = convert.query_string_to_kwargs(query_string)
+        kwargs = convert_query.query_string_to_kwargs(query_string)
         for user_control in self.get_control_list():
             if user_control.identifier not in kwargs:
                 kwargs[user_control.identifier] = user_control.default_value

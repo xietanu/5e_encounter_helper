@@ -118,7 +118,7 @@ def update_query_string(pathname, *control_values):
         )
     }
 
-    query_string = url_tools.convert.kwargs_to_query_string(**kwargs)
+    query_string = url_tools.convert_query.kwargs_to_query_string(**kwargs)
     nav_sidebar = comp.nav_sidebar(dashboard_pages, page, query_string)
 
     content = page.update(**kwargs)
