@@ -1,11 +1,11 @@
 """Page class"""
-from typing import Callable
+from typing import Callable, Optional
 
 from dash import html
-from url_tools import convert
+from url_tools import convert_query
 
 from components import main
-from components.controls import control
+from components.controls import control, control_panel, GroupedControlList
 
 
 class Page:
@@ -15,7 +15,7 @@ class Page:
         self,
         title: str,
         html_template: list,
-        controls: list[control.Control],
+        controls: GroupedControlList,
         update_function: Callable,
     ) -> None:
         """
@@ -41,21 +41,13 @@ class Page:
         Returns:
             html.Main: The HTML main element containing the page's content.
         """
-        kwargs = convert.query_string_to_kwargs(query_string)
-        for user_control in self.controls:
+        kwargs = convert_query.query_string_to_kwargs(query_string)
+        for user_control in self.get_control_list():
             if user_control.identifier not in kwargs:
-                kwargs[user_control.identifier] = user_control.default_value
+                kwargs[user_control.identifier] = [user_control.default_value]
 
         return main.main_content(
-            [
-                html.Div(
-                    [
-                        user_control.to_html(kwargs[user_control.identifier])
-                        for user_control in self.controls
-                    ],
-                    hidden=True,
-                )
-            ]
+            [control_panel.create_control_panel(self.controls, **kwargs)]
             + self.html_template
         )
 
@@ -71,12 +63,30 @@ class Page:
             list: List of the HTML elements to fill in the page.
         """
         relevant_controls = {
-            key: value
+            key: str(value)
             for key, value in control_values.items()
-            if key in [user_control.identifier for user_control in self.controls]
+            if key
+            in [user_control.identifier for user_control in self.get_control_list()]
         }
 
         return self.update_function(**relevant_controls)
+
+    def get_control_list(self) -> list[control.Control]:
+        """
+        Get a flat list of controls in the page
+
+        Returns:
+            list[control.Control]: List of the controls used on the page
+        """
+        control_list = []
+        for _, control_group in self.controls.items():
+            for control_line in control_group:
+                if isinstance(control_line, control.Control):
+                    control_list.append(control_line)
+                else:
+                    for user_control in control_line:
+                        control_list.append(user_control)
+        return control_list
 
 
 class PageStorageAndLookup:
@@ -118,7 +128,7 @@ class PageStorageAndLookup:
         for url_path, page in pages.items():
             self.add_page(url_path, page)
 
-    def get_page(self, pathname: str) -> Page:
+    def get_page(self, pathname: str) -> Optional[Page]:
         """
         Find a stored page from its URL path.
 
@@ -143,5 +153,5 @@ class PageStorageAndLookup:
         """
         controls = set()
         for _, page in self.pages.items():
-            controls.update(page.controls)
-        return list(controls)
+            controls.update(page.get_control_list())
+        return sorted(list(controls), key=lambda x: x.label)

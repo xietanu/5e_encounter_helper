@@ -31,15 +31,42 @@ dashboard_pages.add_pages(
         "/student-enrolment-timeseries": comp.Page(
             title="Monster Calculator",
             html_template=[
-                comp.page_title("Monster Calculator"),
                 comp.card_row(
-                    comp.card(children=["Loading..."], element_id="react-content")
+                    comp.card(children=["Loading..."], element_id="react-content"),
+                    stat_block=True,
                 ),
             ],
-            controls=[
-                comp.controls.Monster.CR.value,
-                comp.controls.Monster.FAMILY.value,
-            ],
+            controls={
+                "Basics": [
+                    comp.controls.ShortTexts.NAME,
+                    comp.controls.Sliders.CR,
+                    [comp.controls.Dropdowns.SIZE, comp.controls.Dropdowns.FAMILY],
+                ],
+                "Armour": [
+                    [comp.controls.Dropdowns.ARMOUR, comp.controls.Numbers.ARMOUR_BONUS]
+                ],
+                "Speed": [
+                    [
+                        comp.controls.Numbers.BASIC_SPEED,
+                        comp.controls.Numbers.FLYING,
+                        comp.controls.Numbers.HOVERING,
+                        comp.controls.Numbers.BURROWING,
+                        comp.controls.Numbers.CLIMBING,
+                        comp.controls.Numbers.SWIMMING,
+                    ]
+                ],
+                "Attribute Modifiers": [
+                    [
+                        comp.controls.Numbers.STR,
+                        comp.controls.Numbers.DEX,
+                        comp.controls.Numbers.CON,
+                        comp.controls.Numbers.INT,
+                        comp.controls.Numbers.WIS,
+                        comp.controls.Numbers.CHA,
+                    ]
+                ],
+                "Traits": [comp.controls.TextArea.TRAITS],
+            },
             update_function=pages.update_monster_calculator,
         ),
     }
@@ -53,20 +80,19 @@ dashboard_pages.add_pages(
 )
 def display_page(pathname, query_string):
     """Show the user the correct page for the given path"""
-    try:
-        page = dashboard_pages.get_page(pathname)
+    page = dashboard_pages.get_page(pathname)
 
-        nav_sidebar = comp.nav_sidebar(dashboard_pages, page, query_string)
+    if not page:
+        raise ValueError(f"No page found for pathname '{pathname}'")
 
-        return [
-            html.Div(
-                [html.Div(nav_sidebar, id="nav_sidebar"), page.to_html(query_string)],
-                className="dashboard-container",
-            ),
-        ]
+    nav_sidebar = comp.nav_sidebar(dashboard_pages, page, query_string)
 
-    except Exception as exception:
-        raise exception
+    return [
+        html.Div(
+            [html.Div(nav_sidebar, id="nav_sidebar"), page.to_html(query_string)],
+            className="dashboard-container",
+        ),
+    ]
 
 
 @app.callback(
@@ -75,13 +101,16 @@ def display_page(pathname, query_string):
     Output("react-content", "children"),
     State("url", "pathname"),
     [
-        Input(control.identifier, "value")
+        Input(control.identifier, component_property="value")
         for control in dashboard_pages.get_all_controls()
     ],
 )
 def update_query_string(pathname, *control_values):
     """Update the query string in the url and in the navbar when a control is changed"""
     page = dashboard_pages.get_page(pathname)
+
+    if not page:
+        raise ValueError(f"No page found for pathname '{pathname}'")
 
     kwargs = {
         control.identifier: str(control_value)
@@ -90,7 +119,7 @@ def update_query_string(pathname, *control_values):
         )
     }
 
-    query_string = url_tools.convert.kwargs_to_query_string(**kwargs)
+    query_string = url_tools.convert_query.kwargs_to_query_string(**kwargs)
     nav_sidebar = comp.nav_sidebar(dashboard_pages, page, query_string)
 
     content = page.update(**kwargs)

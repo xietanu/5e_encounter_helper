@@ -26,3 +26,16 @@ def section_title(title: str) -> html.H2:
         dash.html.H2: title HTML component
     """
     return html.H2(title)
+
+
+def subtitle(text: str) -> html.Div:
+    """
+    Text to display below a title for additional information
+
+    Args:
+        text (str): Text to display.
+
+    Returns:
+        html.Div: The formatted text.
+    """
+    return html.Div(text, className="dnd-hint")

@@ -1,2 +1,2 @@
 """Easier imports for url tools"""
-from url_tools import convert
+from url_tools import convert_query
