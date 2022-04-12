@@ -1,9 +1,22 @@
 """Attribute classes"""
 from dataclasses import dataclass
+from enum import Enum
 
 from dash import html
 
 from dnd import armours
+import formatting
+
+
+class AttributeNames(Enum):
+    """Names of the 6 attributes"""
+
+    STR = "strength"
+    DEX = "dexterity"
+    CON = "constitution"
+    INT = "intelligence"
+    WIS = "wisdom"
+    CHA = "charisma"
 
 
 @dataclass
@@ -13,15 +26,21 @@ class AttributeData:
     name: str
     base_modifier: int = 0
     calc_modifier: int = 0
-    
+
     @property
     def modifier(self) -> int:
+        """
+        Calculates the modifier for this attribute
+
+        Returns:
+            int: The modifier for this attribute
+        """
         return self.base_modifier + self.calc_modifier
 
     @property
     def value(self) -> int:
         """
-        Calculates the overall value associated with the modifier
+        Calculates the overall value associated with this attribute
 
         Returns:
             int: Attribute's value
@@ -58,27 +77,30 @@ class AttributeData:
 class Attributes:
     """Class for a monster's attributes"""
 
-    def __init__(
-        self,
-        strength: int = 0,
-        dex: int = 0,
-        con: int = 0,
-        intelligence: int = 0,
-        wis: int = 0,
-        cha: int = 0,
-    ) -> None:
-        self.str = AttributeData("Strength", strength)
-        self.dex = AttributeData("Dexterity", dex)
-        self.con = AttributeData("Constitution", con)
-        self.int = AttributeData("Intelligence", intelligence)
-        self.wis = AttributeData("Wisdom", wis)
-        self.cha = AttributeData("Charisma", cha)
+    def __init__(self, **base_modifiers) -> None:
+        self._attributes = {}
+        for attribute_name in AttributeNames:
+            if attribute_name.value in base_modifiers:
+                self._attributes[attribute_name.value] = AttributeData(
+                    attribute_name.value,
+                    formatting.defaulted_int(base_modifiers[attribute_name.value], 0),
+                )
+            else:
+                self._attributes[attribute_name.value] = AttributeData(
+                    attribute_name.value, 0
+                )
+
+    def __getattr__(self, attribute_name: str) -> AttributeData:
+        return self._attributes[attribute_name]
 
     def __iter__(self):
-        return iter([self.str, self.dex, self.con, self.int, self.wis, self.cha])
+        return iter([attribute for _, attribute in self._attributes.items()])
 
     def update_dex(
-        self, expected_ac: int, armour_class_bonus: int, armour: armours.ArmourData
+        self,
+        expected_ac: int,
+        armour_type: armours.ArmourData,
+        armour_class_bonus: int,
     ) -> None:
         """
         Update the dexterity based on aspects of the monster.
@@ -88,6 +110,7 @@ class Attributes:
             armour_class_bonus (int): Any armour class bonus (e.g. from shields)
             armour (armours.ArmourData): Current armour used by the monster
         """
-        self.dex.calc_modifier = (
-            min(expected_ac - armour_class_bonus - armour.base_ac, armour.max_dex_mod)
+        self._attributes[AttributeNames.DEX.value].calc_modifier = min(
+            expected_ac - armour_class_bonus - armour_type.base_ac,
+            armour_type.max_dex_mod,
         )

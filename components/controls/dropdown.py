@@ -52,9 +52,9 @@ class Dropdowns(DropdownControl, Enum):
     )
 
     ARMOUR = (
-        "armour",
-        "Armour",
-        dnd.Armours.NATURAL.name,
-        tuple(armour.label for armour in dnd.Armours),
-        tuple(armour.name for armour in dnd.Armours),
+        "armour_type",
+        "Armour type",
+        dnd.ArmourTypes.NATURAL.name,
+        tuple(armour.label for armour in dnd.ArmourTypes),
+        tuple(armour.name for armour in dnd.ArmourTypes),
     )

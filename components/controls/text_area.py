@@ -1,12 +1,14 @@
-"""Text input controls"""
+"""Text area input"""
 from dataclasses import dataclass
 from enum import Enum
+
 from dash import dcc
-from components.controls import control
+
+from components.controls.control import Control
 
 
 @dataclass(frozen=True)
-class TextAreaControl(control.Control):
+class TextAreaControl(Control):
     """
     A control that allows the user to input a short piece of text.
     """

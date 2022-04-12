@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
+from dnd import attributes
 
 
 @dataclass
@@ -46,5 +47,10 @@ class Families(FamilyData, Enum):
     UNDEAD = (
         "Undead",
         "Undead creatures were once alive, and have been reanimated by unnatural forces.",
-        {'intelligence':-1,'con':3,'wis':-1,'cha':-3}
+        {
+            attributes.AttributeNames.INT.value: -1,
+            attributes.AttributeNames.CON.value: 3,
+            attributes.AttributeNames.WIS.value: -1,
+            attributes.AttributeNames.CHA.value: -3,
+        },
     )

@@ -1,6 +1,6 @@
 """Monster class"""
-
-from dnd import armours, constants, families, sizes, attributes, dice, speed
+import dataclasses
+from dnd import armours, constants, attributes, dice, monster_core, speed
 
 
 BASE_DC = 11
@@ -15,33 +15,54 @@ class Monster:
 
     def __init__(
         self,
-        name: str,
-        challenge_rating: int,
-        family: families.FamilyData,
-        size: sizes.SizeData,
-        armour: armours.ArmourData,
-        speeds: dict[str, int],
-        base_attribute_modifiers: dict[str, int],
-        armour_class_bonus: int = 0,
+        core: monster_core.MonsterCoreData,
+        base_attributes: attributes.Attributes,
+        speeds: speed.Speeds,
+        armour: armours.Armour,
     ):
-        self.name = name
-        self.challenge_rating = challenge_rating
-        self.family = family
-        self.size = size
+        self.core = core
         self.armour = armour
-        self.armour_class_bonus = armour_class_bonus
-        
-        if family.stat_modifiers is not None:
-            for key, value in base_attribute_modifiers.items():
-                if key in family.stat_modifiers:
-                    base_attribute_modifiers[key] = value + family.stat_modifiers[key]
 
-        self.attributes = attributes.Attributes(**base_attribute_modifiers)
+        self.attributes = base_attributes
 
         self.attributes.update_dex(
-            self._expected_armour_class, armour_class_bonus, armour
+            self._expected_armour_class, armour.armour_type, armour.bonus
         )
-        self.speeds = speed.Speeds(**speeds)
+        self.speeds = speeds
+
+    @classmethod
+    def from_query_string_kwargs(cls, **kwargs):
+        """Create a monster from the keyword arguments found in the query string"""
+        core_kwargs = {
+            key: value
+            for key, value in kwargs.items()
+            if key
+            in [
+                field.name for field in dataclasses.fields(monster_core.MonsterCoreData)
+            ]
+        }
+        attribute_kwargs = {
+            key: value
+            for key, value in kwargs.items()
+            if key in [attribute.value for attribute in attributes.AttributeNames]
+        }
+        speed_kwargs = {
+            key: value
+            for key, value in kwargs.items()
+            if key in [speed.value for speed in speed.SpeedNames]
+        }
+        armour_kwargs = {
+            key: value
+            for key, value in kwargs.items()
+            if key in [field.name for field in dataclasses.fields(armours.Armour)]
+        }
+
+        return cls(
+            core=monster_core.MonsterCoreData(**core_kwargs),
+            base_attributes=attributes.Attributes(**attribute_kwargs),
+            speeds=speed.Speeds(**speed_kwargs),
+            armour=armours.Armour(**armour_kwargs),
+        )
 
     @property
     def experience_points(self) -> int:
@@ -51,7 +72,7 @@ class Monster:
         Returns:
             int: Experience points
         """
-        return constants.XP_FROM_CR[self.challenge_rating]
+        return constants.XP_FROM_CR[self.core.challenge_rating]
 
     @property
     def proficiency_bonus(self) -> int:
@@ -61,7 +82,7 @@ class Monster:
         Returns:
             int: Monster's proficiency bonus
         """
-        return max((self.challenge_rating - 1), 0) // 4 + BASE_PROF_BONUS
+        return max((self.core.challenge_rating - 1), 0) // 4 + BASE_PROF_BONUS
 
     @property
     def save_dc(self) -> int:
@@ -71,7 +92,7 @@ class Monster:
         Returns:
             int: Stanard difficulty class.
         """
-        return BASE_DC + ((self.challenge_rating + 1) // 2)
+        return BASE_DC + ((self.core.challenge_rating + 1) // 2)
 
     @property
     def _expected_armour_class(self) -> int:
@@ -81,7 +102,7 @@ class Monster:
         Returns:
             int: Expected armour class
         """
-        return BASE_AC + (self.challenge_rating // 2)
+        return BASE_AC + (self.core.challenge_rating // 2)
 
     @property
     def armour_class(self) -> int:
@@ -92,9 +113,11 @@ class Monster:
             int: Expected armour class
         """
         return (
-            self.armour.base_ac
-            + min(self.attributes.dex.modifier, self.armour.max_dex_mod)
-            + self.armour_class_bonus
+            self.armour.armour_type.base_ac
+            + min(
+                self.attributes.dexterity.modifier, self.armour.armour_type.max_dex_mod
+            )
+            + self.armour.bonus
         )
 
     @property
@@ -105,7 +128,7 @@ class Monster:
         Returns:
             int: expected hit points.
         """
-        modifidied_challenge_rating = self.challenge_rating + (
+        modifidied_challenge_rating = self.core.challenge_rating + (
             (self._expected_armour_class - self.armour_class) // 2
         )
         if modifidied_challenge_rating <= 0:
@@ -124,8 +147,10 @@ class Monster:
         """
         hp_level = round(
             self._expected_hp
-            / (self.size.die.average_value + self.attributes.con.modifier)
+            / (self.core.size.die.average_value + self.attributes.constitution.modifier)
         )
         return dice.DiceFormula(
-            hp_level, self.size.die, hp_level * self.attributes.con.modifier
+            hp_level,
+            self.core.size.die,
+            hp_level * self.attributes.constitution.modifier,
         )

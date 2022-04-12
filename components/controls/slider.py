@@ -2,9 +2,8 @@
 from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
-from dash import html, dcc, Input, Output
+from dash import html, dcc
 from components.controls import control
-from app import app
 import formatting
 
 
@@ -54,16 +53,6 @@ class SliderControl(control.Control):
                 "width": f"{pixel_width}px",
             },
         )
-
-    def _add_callback(self):
-        @app.callback(
-            Output(
-                component_id=f"{self.identifier}-value", component_property="children"
-            ),
-            Input(component_id=f"{self.identifier}", component_property="value"),
-        )
-        def update_readout(value: str) -> str:
-            return value
 
 
 class Sliders(SliderControl, Enum):

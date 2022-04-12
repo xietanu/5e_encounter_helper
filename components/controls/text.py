@@ -26,7 +26,7 @@ class ShortTextControl(control.Control):
 class ShortTexts(ShortTextControl, Enum):
     """Short text inputs"""
 
-    NAME = "monster_name", "Name", "", 20
+    NAME = "name", "Name", "Unnamed Monster", 20
 
 
 @dataclass(frozen=True)
@@ -55,16 +55,16 @@ class NumberControl(control.Control):
 class Numbers(NumberControl, Enum):
     """Integer text inputs"""
 
-    ARMOUR_BONUS = ("armour_class_bonus", "Armour class bonus", "0", 0, 10)
+    ARMOUR_BONUS = ("bonus", "Armour class bonus", "0", 0, 10)
     BASIC_SPEED = ("basic_speed", "Speed", "30", 0, 150, 5)
-    FLYING = ("flying", "Flying", "0", 0, 150, 5)
-    HOVERING = ("hovering", "Hovering", "0", 0, 150, 5)
-    BURROWING = ("burrowing", "Burrowing", "0", 0, 150, 5)
-    CLIMBING = ("climbing", "Climbing", "0", 0, 150, 5)
-    SWIMMING = ("swimming", "Swimming", "0", 0, 150, 5)
+    FLYING = ("fly", "Flying", "0", 0, 150, 5)
+    HOVERING = ("hover", "Hovering", "0", 0, 150, 5)
+    BURROWING = ("burrow", "Burrowing", "0", 0, 150, 5)
+    CLIMBING = ("climb", "Climbing", "0", 0, 150, 5)
+    SWIMMING = ("swim", "Swimming", "0", 0, 150, 5)
     STR = ("strength", "Str", "0", -5, 5)
-    DEX = ("dex", "Dex", "0", -5, 5)
-    CON = ("con", "Con", "0", -5, 5)
+    DEX = ("dexterity", "Dex", "0", -5, 5)
+    CON = ("constitution", "Con", "0", -5, 5)
     INT = ("intelligence", "Int", "0", -5, 5)
-    WIS = ("wis", "Wis", "0", -5, 5)
-    CHA = ("cha", "Cha", "0", -5, 5)
+    WIS = ("wisdom", "Wis", "0", -5, 5)
+    CHA = ("charisma", "Cha", "0", -5, 5)
