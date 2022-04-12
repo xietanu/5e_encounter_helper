@@ -28,4 +28,4 @@ class TextAreaControl(Control):
 class TextArea(TextAreaControl, Enum):
     """Text area inputs"""
 
-    TRAITS = "traits_block", "", "Example. An example trait.", 50, 6
+    TRAITS = "traits", "", "Example. An example trait.", 50, 6

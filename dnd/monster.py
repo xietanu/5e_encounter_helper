@@ -24,6 +24,13 @@ class Monster:
         self.armour = armour
 
         self.attributes = base_attributes
+        for attribute_name in [attribute.value for attribute in attributes.AttributeNames]:
+            if (
+                self.core.family.stat_modifiers
+                and attribute_name in self.core.family.stat_modifiers
+            ):
+                attribute = getattr(self.attributes, attribute_name)
+                attribute.base_modifier += self.core.family.stat_modifiers[attribute_name]
 
         self.attributes.update_dex(
             self._expected_armour_class, armour.armour_type, armour.bonus
