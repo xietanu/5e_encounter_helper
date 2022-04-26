@@ -38,23 +38,23 @@ class Dropdowns(DropdownControl, Enum):
     FAMILY = (
         "family",
         "Type",
-        dnd.Families.HUMANOID.name,
-        tuple(family.label for family in dnd.Families),
-        tuple(family.name for family in dnd.Families),
+        dnd.monster.Families.HUMANOID.name,
+        tuple(family.label for family in dnd.monster.Families),
+        tuple(family.name for family in dnd.monster.Families),
     )
 
     SIZE = (
         "size",
         "Size",
-        dnd.Sizes.MEDIUM.name,
-        tuple(size.label for size in dnd.Sizes),
-        tuple(size.name for size in dnd.Sizes),
+        dnd.monster.Sizes.MEDIUM.name,
+        tuple(size.label for size in dnd.monster.Sizes),
+        tuple(size.name for size in dnd.monster.Sizes),
     )
 
     ARMOUR = (
         "armour_type",
         "Armour type",
-        dnd.ArmourTypes.NATURAL.name,
-        tuple(armour.label for armour in dnd.ArmourTypes),
-        tuple(armour.name for armour in dnd.ArmourTypes),
+        dnd.monster.ArmourTypes.NATURAL.name,
+        tuple(armour.label for armour in dnd.monster.ArmourTypes),
+        tuple(armour.name for armour in dnd.monster.ArmourTypes),
     )

@@ -17,7 +17,7 @@ def update_monster_calculator(
         list: List of html components
     """
 
-    monster = dnd.Monster.from_query_string_kwargs(**kwargs)
+    monster = dnd.monster.Monster.from_query_string_kwargs(**kwargs)
 
     return [
         comp.card_section(

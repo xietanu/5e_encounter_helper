@@ -131,3 +131,6 @@ dmypy.json
 # vscode
 .vscode/
 .VSCodeCounter
+
+# data
+data/monsters/*.json

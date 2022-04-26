@@ -2,11 +2,13 @@
 Index outlining the dashboard's layout and links to pages.
 """
 
+import json
 from dash import Input, Output, State, dcc, html
 
 import components as comp
 import pages
 import url_tools
+from dnd import monster
 from app import app
 
 app.title = "D&D 5e Encounter Helper"
@@ -31,6 +33,14 @@ dashboard_pages.add_pages(
         "/student-enrolment-timeseries": comp.Page(
             title="Monster Calculator",
             html_template=[
+                comp.card_row(
+                    [
+                        comp.card(
+                            [comp.button("Save Monster", component_id="save-button", width="200px")]
+                        ),
+                        comp.card([""], element_id="save-message"),
+                    ]
+                ),
                 comp.card_row(
                     comp.card(children=["Loading..."], element_id="react-content"),
                     stat_block=True,
@@ -125,3 +135,37 @@ def update_query_string(pathname, *control_values):
     content = page.update(**kwargs)
 
     return query_string, nav_sidebar, content
+
+
+@app.callback(
+    Output("save-message", "children"),
+    Input("save-button", "n_clicks"),
+    [
+        State(control.identifier, component_property="value")
+        for control in dashboard_pages.get_all_controls()
+    ],
+)
+def save_monster(n_clicks, *control_values):
+    """
+    Save the current monster to a json file.
+    """
+    if not n_clicks:
+        return ""
+
+    monster_to_save = monster.Monster.from_query_string_kwargs(
+        **{
+            control.identifier: str(control_value)
+            for control, control_value in zip(
+                dashboard_pages.get_all_controls(), control_values
+            )
+        }
+    )
+
+    with open(
+        f'data/monsters/{monster_to_save.core.name.replace(" ", "_")}.json',
+        mode="w",
+        encoding="utf-8",
+    ) as outfile:
+        json.dump(monster_to_save.to_dict(), indent=4, sort_keys=True, fp=outfile)
+
+    return f'{monster_to_save.core.name.replace(" ", "_")}.json saved.'

@@ -16,12 +16,12 @@ class Monster:
 
     def __init__(
         self,
-        core: core.MonsterCoreData,
+        core_data: core.MonsterCoreData,
         base_attributes: attributes.Attributes,
         speeds: speed.Speeds,
         armour: armours.Armour,
     ):
-        self.core = core
+        self.core = core_data
         self.armour = armour
 
         self.attributes = base_attributes
@@ -66,7 +66,7 @@ class Monster:
         }
 
         return cls(
-            core=core.MonsterCoreData(**core_kwargs),
+            core_data=core.MonsterCoreData(**core_kwargs),
             base_attributes=attributes.Attributes(**attribute_kwargs),
             speeds=speed.Speeds(**speed_kwargs),
             armour=armours.Armour(**armour_kwargs),
@@ -162,7 +162,7 @@ class Monster:
             self.core.size.die,
             hp_level * self.attributes.constitution.modifier,
         )
-    
+
     def to_dict(self) -> dict[str,dict]:
         """
         Convert this monster's configuration to a dictionary
