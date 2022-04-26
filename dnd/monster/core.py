@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 from typing import Optional, Union
 
-from dnd import families, sizes
+from dnd.monster import families, sizes
 import formatting
 
 
@@ -52,3 +52,23 @@ class MonsterCoreData:
             unique_title = f"{title} ({title_repeat})."
 
         self.traits[unique_title] = value
+
+    def to_dict(self) -> dict[str, str]:
+        """
+        Creates a dictionary containing configuration of the monster core for saving.
+
+        Returns:
+            dict[str, str]: The dictionary containing the configuration.
+        """
+        trait_lines = (
+            "\n".join(f"{name}{value}" for name, value in self.traits.items())
+            if self.traits is not None
+            else ""
+        )
+        return {
+            "name": self.name,
+            "challenge_rating": str(self.challenge_rating),
+            "size": self.size.name,
+            "family": self.family.name,
+            "traits": trait_lines,
+        }

@@ -63,3 +63,15 @@ class Speeds:
             ]
             if speed_type.distance > 0
         )
+
+    def to_dict(self) -> dict[str, str]:
+        """
+        Convert speed data to a dictionary for saving.
+
+        Returns:
+            dict[str,str]: The dictionary of speed data
+        """
+        return {
+            (speed.name if speed.name else "basic_speed"): str(speed.distance)
+            for speed in self
+        }

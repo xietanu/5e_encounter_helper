@@ -4,7 +4,7 @@ from enum import Enum
 
 from dash import html
 
-from dnd import armours
+from dnd.monster import armours
 import formatting
 
 
@@ -95,6 +95,17 @@ class Attributes:
 
     def __iter__(self):
         return iter([attribute for _, attribute in self._attributes.items()])
+    
+    def to_dict(self) -> dict[str,str]:
+        """
+        Convert attributes to a dictionary for saving.
+
+        Returns:
+            dict[str,str]: Dictionary of attributes with base modifiers.
+        """
+        return {
+            name: str(attribute.base_modifier) for name, attribute in self._attributes.items()
+        }
 
     def update_dex(
         self,
