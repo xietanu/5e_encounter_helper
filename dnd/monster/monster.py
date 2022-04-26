@@ -1,6 +1,7 @@
 """Monster class"""
 import dataclasses
-from dnd import armours, constants, attributes, dice, monster_core, speed
+from dnd import dice, constants
+from dnd.monster import armours, attributes, core, speed
 
 
 BASE_DC = 11
@@ -15,7 +16,7 @@ class Monster:
 
     def __init__(
         self,
-        core: monster_core.MonsterCoreData,
+        core: core.MonsterCoreData,
         base_attributes: attributes.Attributes,
         speeds: speed.Speeds,
         armour: armours.Armour,
@@ -45,7 +46,7 @@ class Monster:
             for key, value in kwargs.items()
             if key
             in [
-                field.name for field in dataclasses.fields(monster_core.MonsterCoreData)
+                field.name for field in dataclasses.fields(core.MonsterCoreData)
             ]
         }
         attribute_kwargs = {
@@ -65,7 +66,7 @@ class Monster:
         }
 
         return cls(
-            core=monster_core.MonsterCoreData(**core_kwargs),
+            core=core.MonsterCoreData(**core_kwargs),
             base_attributes=attributes.Attributes(**attribute_kwargs),
             speeds=speed.Speeds(**speed_kwargs),
             armour=armours.Armour(**armour_kwargs),
@@ -161,3 +162,17 @@ class Monster:
             self.core.size.die,
             hp_level * self.attributes.constitution.modifier,
         )
+    
+    def to_dict(self) -> dict[str,dict]:
+        """
+        Convert this monster's configuration to a dictionary
+
+        Returns:
+            dict[str,dict]: The dictionary representing the monster's configuration.
+        """
+        return {
+            'core': self.core.to_dict(),
+            'base_attributes': self.attributes.to_dict(),
+            'speeds': self.speeds.to_dict(),
+            'armour': self.armour.to_dict(),
+        }

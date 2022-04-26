@@ -28,11 +28,23 @@ class ArmourTypes(ArmourData, Enum):
 class Armour:
     """Data on a monster's specific armour"""
 
-    armour_type: ArmourTypes = ArmourTypes.MEDIUM
+    armour_type: ArmourTypes = ArmourTypes.NATURAL
     bonus: int = 0
 
     def __init__(
-        self, armour_type: str = ArmourTypes.MEDIUM.name, bonus: Union[str, int] = 0
+        self, armour_type: str = ArmourTypes.NATURAL.name, bonus: Union[str, int] = 0
     ):
         self.armour_type = ArmourTypes[armour_type]
         self.bonus = formatting.defaulted_int(bonus, 0)
+
+    def to_dict(self) -> dict[str, str]:
+        """
+        Convert values to dictionary for saving
+
+        Returns:
+            dict[str,str]: The dictionary containing the configuration.
+        """
+        return {
+            "armour_type": self.armour_type.name,
+            "bonus": str(self.bonus),
+        }

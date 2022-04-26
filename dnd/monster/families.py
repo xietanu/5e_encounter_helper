@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
-from dnd import attributes
+from dnd.monster import attributes
 
 
 @dataclass
