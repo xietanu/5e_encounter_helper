@@ -41,10 +41,7 @@ dashboard_pages.add_pages(
                         comp.card([""], element_id="save-message"),
                     ]
                 ),
-                comp.card_row(
-                    comp.card(children=["Loading..."], element_id="react-content"),
-                    stat_block=True,
-                ),
+                html.Div(['Loading...'], id='react-content'),
             ],
             controls={
                 "Basics": [
